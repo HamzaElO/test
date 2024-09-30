@@ -236,7 +236,11 @@
                 var Paused = true;
                 
                 var Lost = false;
-                
+                $('#PauseButton').on('touchstart', function(event) {
+		    event.preventDefault(); // Prevent default behavior
+		    togglePause(); // Toggle the pause on touch
+		});
+
                 function pauseGame(){
                     clearInterval(gameLoopIntervalID); //Stop the timer
                     $('.Pipe').addClass('paused'); //Pause the CSS3 animation so the pipes don't move.
@@ -286,7 +290,17 @@
                         startGame();
                     }
                 }                            
-                
+
+		function resizeCanvas() {
+		    var canvas = $('#Canvas');
+		    canvas.width(window.innerWidth); // Set width to window width
+		    canvas.height(window.innerHeight); // Set height to window height
+		}
+		$(window).on('resize', function() {
+		    resizeCanvas(); // Call resize function on window resize
+		});
+		resizeCanvas(); // Initial call to set the canvas size
+
                 var CurrentScore = 0;
                 
                 $('#PauseButton').mousedown(function(event){
@@ -300,6 +314,11 @@
                 
 				canvasObject.mousedown(function(){
 					Birdy.jump(); //Jump when the user clicks
+				});
+				// Add touch event listener for mobile devices
+				canvasObject.on('touchstart', function(event) {
+				    event.preventDefault(); // Prevent default touch behavior
+				    Birdy.jump(); // Jump when the user taps
 				});
                 
                 $('body').keydown(function(event){
