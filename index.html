@@ -8,18 +8,35 @@
                 src: url('https://www.mediafont.com/storage/contents/3184/04B_19__.TTF'); /* non-IE */ 
             }
             
-			body{
-				margin: 0; /* Make sure the body has 0 margin initially */
-				width:100%; /* Define we're using full width of the browser */
-				height:100%; /* Define we're using full height of the browser */
-                overflow: hidden; /* Hide scrollbars */
+			body {
+			    margin: 0;
+			    overflow: hidden; /* Prevent scroll bars */
 			}
-			#Canvas{
-                position:relative; /* Position relative, so all absolute items will be "contained"" through here */
-				width: 100%; /* Define that we're using the full width of the body */
-				height: 100%; /* Define that we're using the full width of the body */
-				background: steelblue; /* Temporary color background */
+			
+			#Canvas {
+			    width: 100vw;  /* Full width of the viewport */
+			    height: 100vh; /* Full height of the viewport */
+			    display: block; /* Remove extra spacing */
 			}
+			
+			#InstructionBox {
+			    position: absolute;
+			    top: 10px;
+			    left: 50%;
+			    transform: translateX(-50%); /* Center horizontally */
+			    z-index: 10; /* Ensure it’s on top */
+			}
+			
+			/* Style buttons for touch */
+			#PauseButton, #ResetButton {
+			    position: absolute;
+			    bottom: 20px;
+			    left: 50%;
+			    transform: translateX(-50%);
+			    padding: 15px; /* Larger touch area */
+			    font-size: 20px; /* Larger text for touch */
+			}
+
 			#Birdy{
                 /* Ratio is about 1.449 (Width/Height) */
 		width: 2.9%;
@@ -45,31 +62,31 @@
                 transform:rotate(90deg);
             }
             
-            #PauseButton{
+/*             #PauseButton{
                 position:absolute;
                 /* Position button so it's not hugging the screen edge */
-                top: 2%; 
+ /*               top: 2%; 
                 right: 1%;
                 
                 width: 3%; /* Make the width scale with the canvas size */
-                height: 0; /* Set an initial 0 height */
+ /*               height: 0; /* Set an initial 0 height */
                  /* Use padding of same width% to create a square
                  Padding uses percentages based on width, so we're going to use padding that'll add up to 3%*/
-                padding-top: 1.25%;
+    /*            padding-top: 1.25%;
                 padding-bottom: 1.75%;
                 
                 background: orange;
                 
                 border-radius: 5px; /*Rounded corners*/
                 
-                font-size: 2.6vw; /* Scale Font to 3% of ViewPort*/
-                text-align: center; /* Horiziontally center pause text */
+/*                font-size: 2.6vw; /* Scale Font to 3% of ViewPort*/
+  /*              text-align: center; /* Horiziontally center pause text */
                 
-                z-index: 50; /* Make it lay on top of the pipes */
+   /*             z-index: 50; /* Make it lay on top of the pipes */
                 
-                cursor:pointer; /* Make it appear like it's a button so the cursor turns into a hand when hovered */
-            }
-            #PauseButton span{
+    /*            cursor:pointer;} /* Make it appear like it's a button so the cursor turns into a hand when hovered */
+            
+            #PauseButton span{ 
                 line-height: 3%; /*Vertically center the pause text */
                 margin-left: 3%; /* Adjust pause text position */
             }
