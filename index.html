@@ -1,5 +1,7 @@
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 		<style>
             /* Load the flappybird font from an external source */
             @font-face {
@@ -22,8 +24,8 @@
 			}
 			#Birdy{
                 /* Ratio is about 1.449 (Width/Height) */
-		width: 2.9%;
-                padding-bottom: 2%;
+			    width: 10vw; /* Use relative units like vw/vh */
+			    padding-bottom: 6vh; /* Adjust padding accordingly */
                 
                 
                 background-image: url('https://flappybird.io/img/bird.png');
@@ -51,8 +53,8 @@
                 top: 2%; 
                 right: 1%;
                 
-                width: 3%; /* Make the width scale with the canvas size */
-                height: 0; /* Set an initial 0 height */
+                width: 8vw; /* Make the width scale with the canvas size */
+                height: auto; /* Set an initial 0 height */
                  /* Use padding of same width% to create a square
                  Padding uses percentages based on width, so we're going to use padding that'll add up to 3%*/
                 padding-top: 1.25%;
@@ -62,7 +64,7 @@
                 
                 border-radius: 5px; /*Rounded corners*/
                 
-                font-size: 2.6vw; /* Scale Font to 3% of ViewPort*/
+                font-size: 4vw; /* Scale Font to 3% of ViewPort*/
                 text-align: center; /* Horiziontally center pause text */
                 
                 z-index: 50; /* Make it lay on top of the pipes */
@@ -133,7 +135,7 @@
                 display: none; /* Hide initially */
                 
                 font-family: flappybird; /* Use the flappybird font for the score */
-                font-size: 2vw; /* Scale the font to 2% of viewport */
+                font-size: 3.5vw; /* Scale the font to 2% of viewport */
                 
                 color:white; /* White font */                
                 text-shadow: /* Give it a 2px of "text shadow" to act as an outline to the score text */
@@ -154,7 +156,7 @@
                 text-align: center; /* Horiziontally center the text */
                 
                 font-family: flappybird; /* Use the flappybird font for the score */
-                font-size: 4vw; /* Scale the font to 2% of viewport */
+                font-size: 7vw; /* Scale the font to 2% of viewport */
                 
                 color:white; /* White font */                
                 text-shadow: /* Give it a 2px of "text shadow" to act as an outline to the score text */
