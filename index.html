@@ -25,12 +25,12 @@
 			#Birdy{
                 /* Ratio is about 1.449 (Width/Height) */
 			    width: 10vw; /* Use relative units like vw/vh */
-			    padding-bottom: 6vh; /* Adjust padding accordingly */
-                
+			    padding-bottom: 0; /* Adjust padding accordingly */
+                	    height: auto;
                 
                 background-image: url('https://flappybird.io/img/bird.png');
                 
-                background-size: 300%; /* Make the width 300% of the current width, so that only 1 frame fits and the other 2 frames are hidden */
+                background-size: cover; /* Make the width 300% of the current width, so that only 1 frame fits and the other 2 frames are hidden */
 				
 				position:absolute; /* Absolutely positioned, so it's out of flow of regular elements, position wherever we'd like */
 				top: 50%; /* We're going to be around middle of the screen (a bit lower due to height)*/
@@ -81,21 +81,21 @@
                 top: 0; /* Hug the top of the screen */
                 left: 100%; /* Start off the screen */
                 
-                width: 5%; /* Arbitrary pipe percentage */
+                width: 5vw; /* Arbitrary pipe percentage */
                 
                 background: greenyellow;
                 
-                animation: PipeMovement 15s linear; /* Run the movement animation in 15 seconds linearly */
-                -webkit-animation: PipeMovement 15s linear; /* webkit prefix */
+                animation: PipeMovement 10s linear; /* Run the movement animation in 15 seconds linearly */
+                -webkit-animation: PipeMovement 10s linear; /* webkit prefix */
             }
             
             @keyframes PipeMovement{
                 from {left: 100%} /* Define that we'll start at position 100% left (off screen to the right) */
-                to {left: -25%} /* Define that we'll end at -25% left (off screen to the left) */
+                to {left: -10vw} /* Define that we'll end at -25% left (off screen to the left) */
             }
             @-webkit-keyframes PipeMovement{ /* webkit prefix */
                 from {left: 100%}
-                to {left: -25%}
+                to {left: -10vw}
             }
             
             /* Pause the animation when the user hits the pause button */
@@ -437,7 +437,7 @@
                         }
 						jumping = true; //Set that we're jumping right now
                         adjustAngle(-45);
-						selectorObject.stop().animate({top:'-=9%'}, 100, 'linear', function(){ //stop any current animations and "Jump" up 9% in 100ms linearly.
+						selectorObject.stop().animate({top:'-=10vh'}, 100, 'linear', function(){ //stop any current animations and "Jump" up 9% in 100ms linearly.
 							jumping = false; //Set our jumping flag to false right after our jump
 							Birdy.fall(); //Run the fall immediately 
 						});
