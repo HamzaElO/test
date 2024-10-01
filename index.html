@@ -8,51 +8,35 @@
                 src: url('https://www.mediafont.com/storage/contents/3184/04B_19__.TTF'); /* non-IE */ 
             }
             
-			body {
-			    margin: 0;
-			    overflow: hidden; /* Prevent scroll bars */
+			body{
+				margin: 0; /* Make sure the body has 0 margin initially */
+				width:100%; /* Define we're using full width of the browser */
+				height:100%; /* Define we're using full height of the browser */
+                overflow: hidden; /* Hide scrollbars */
 			}
-			
 			#Canvas {
-			    width: 100vw;  /* Full width of the viewport */
-			    height: 100vh; /* Full height of the viewport */
-			    display: block; /* Remove extra spacing */
-			}
-			
-			#InstructionBox {
-			    position: absolute;
-			    top: 10px;
-			    left: 50%;
-			    transform: translateX(-50%); /* Center horizontally */
-			    z-index: 10; /* Ensure it’s on top */
-			}
-			
-			/* Style buttons for touch */
-			#PauseButton, #ResetButton {
-			    position: absolute;
-			    bottom: 20px;
-			    left: 50%;
-			    transform: translateX(-50%);
-			    padding: 15px; /* Larger touch area */
-			    font-size: 20px; /* Larger text for touch */
-			}
+				    width: 100vw; /* Full viewport width */
+				    height: 100vh; /* Full viewport height */
+				    background-color: steelblue; /* Temporary background color */
+				    position: relative; /* Ensure relative positioning for bird placement */
+				}
 
-			#Birdy{
-                /* Ratio is about 1.449 (Width/Height) */
-		width: 2.9%;
-                padding-bottom: 2%;
-                
-                
-                background-image: url('https://flappybird.io/img/bird.png');
-                
-                background-size: 300%; /* Make the width 300% of the current width, so that only 1 frame fits and the other 2 frames are hidden */
-				
-				position:absolute; /* Absolutely positioned, so it's out of flow of regular elements, position wherever we'd like */
-				top: 50%; /* We're going to be around middle of the screen (a bit lower due to height)*/
-				left: 20%; /* We're going to be at around 20% left of the screen */
-                
-                z-index: 150; /* Display in front of pipes even after getting hit by them */
 			}
+			#Birdy {
+				    width: 50px; /* Set a fixed width for the bird to ensure visibility */
+				    height: auto; /* Keep the aspect ratio */
+				    background-image: url('https://flappybird.io/img/bird.png');
+				    background-size: contain; /* Ensure the image fits within the div */
+				    background-repeat: no-repeat; /* Avoid repeating the bird image */
+				    
+				    position: absolute; /* Ensure the bird is absolutely positioned */
+				    top: 50%; /* Place the bird in the middle vertically */
+				    left: 20%; /* Keep the bird 20% from the left */
+				    
+				    z-index: 150; /* Ensure the bird is in front of pipes */
+				    transform: translateY(-50%); /* Center the bird vertically */
+				}
+
             
             .FallenBirdy{
                 -webkit-transform:rotate(90deg);
@@ -62,31 +46,31 @@
                 transform:rotate(90deg);
             }
             
-/*             #PauseButton{
+            #PauseButton{
                 position:absolute;
                 /* Position button so it's not hugging the screen edge */
- /*               top: 2%; 
+                top: 2%; 
                 right: 1%;
                 
                 width: 3%; /* Make the width scale with the canvas size */
- /*               height: 0; /* Set an initial 0 height */
+                height: 0; /* Set an initial 0 height */
                  /* Use padding of same width% to create a square
                  Padding uses percentages based on width, so we're going to use padding that'll add up to 3%*/
-    /*            padding-top: 1.25%;
+                padding-top: 1.25%;
                 padding-bottom: 1.75%;
                 
                 background: orange;
                 
                 border-radius: 5px; /*Rounded corners*/
                 
-/*                font-size: 2.6vw; /* Scale Font to 3% of ViewPort*/
-  /*              text-align: center; /* Horiziontally center pause text */
+                font-size: 2.6vw; /* Scale Font to 3% of ViewPort*/
+                text-align: center; /* Horiziontally center pause text */
                 
-   /*             z-index: 50; /* Make it lay on top of the pipes */
+                z-index: 50; /* Make it lay on top of the pipes */
                 
-    /*            cursor:pointer;} /* Make it appear like it's a button so the cursor turns into a hand when hovered */
-            
-            #PauseButton span{ 
+                cursor:pointer; /* Make it appear like it's a button so the cursor turns into a hand when hovered */
+            }
+            #PauseButton span{
                 line-height: 3%; /*Vertically center the pause text */
                 margin-left: 3%; /* Adjust pause text position */
             }
@@ -251,13 +235,16 @@
                 
                 var gameLoopIntervalID = 0;
                 var Paused = true;
-                
+				
+                var gameStarted = false;  // Flag to track if the game has started
+
                 var Lost = false;
                 $('#PauseButton').on('touchstart', function(event) {
 		    event.preventDefault(); // Prevent default behavior
 		    togglePause(); // Toggle the pause on touch
 		});
 
+		
                 function pauseGame(){
                     clearInterval(gameLoopIntervalID); //Stop the timer
                     $('.Pipe').addClass('paused'); //Pause the CSS3 animation so the pipes don't move.
@@ -317,6 +304,18 @@
 		    resizeCanvas(); // Call resize function on window resize
 		});
 		resizeCanvas(); // Initial call to set the canvas size
+
+		function resizeBird() {
+		    var bird = document.getElementById('Birdy');
+		    
+		    // Set dynamic width for the bird (this can be adjusted)
+		    bird.style.width = (window.innerWidth * 0.05) + 'px';  // 5% of screen width
+		    bird.style.height = 'auto';  // Keep aspect ratio
+		}
+
+// Call this on window resize
+window.addEventListener('resize', resizeBird);
+resizeBird(); // Call initially to set the bird's size
 
                 var CurrentScore = 0;
                 
@@ -400,8 +399,21 @@
                         WingPosition = 0;
                         selectorObject.stop().rotate(0).css('top','50%');
                     }
-                    
+                    // Start the game on first click or touch
+					
+					$('#Canvas').on('mousedown touchstart', function() {
+					    if (!gameStarted) {
+					        gameStarted = true;  // Start the game
+					        startGame();  // Call the function to start the game loop
+					    }
+					    
+					    Birdy.jump(); // The bird will jump on interaction
+					});
+
 					this.fall = function(){
+						if (!gameStarted) {
+							        return; // Don't let the bird fall before the game starts
+							    }
 						if(!jumping){ //Check if we're jumping
 							//If we're currently not jumping
 							selectorObject.stop().animate({top:'+='+gravVeloc+'%'}, 30, 'linear'); //Stop any current animations and then drop the bird by Velocity%
