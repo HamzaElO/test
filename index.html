@@ -295,30 +295,38 @@
 
 		function resizeCanvas() {
 			    var canvas = $('#Canvas');
-			    canvas.width(window.innerWidth); // Set width to window width
-			    canvas.height(window.innerHeight); // Set height to window height
+			    canvas.width(window.innerWidth);  // Set canvas width to window width
+			    canvas.height(window.innerHeight);  // Set canvas height to window height
 			
-			    // Instead of recreating the bird, ensure the existing bird's size and position is adjusted:
+			    // Check if the bird already exists before adjusting its size/position
 			    var birdy = $('#Birdy');
-			    
-			    // If the bird already exists, adjust its size/position if necessary
-			    if (birdy.length > 0) {
-			        // Adjust bird's position based on new canvas size
-			        birdy.css({
-			            top: '50%',  // Keep it in the middle of the screen vertically
-			            left: '20%', // Keep it at 20% from the left
-			            width: '2.9%',  // Adjust width relative to the new canvas size if necessary
-			        });
+			
+			    if (birdy.length === 0) {
+			        // If Birdy doesn't exist, create it
+			        birdy = $('<div id="Birdy"></div>').appendTo(canvas);
 			    }
+			
+			    // Adjust the size and position of the existing bird
+			    birdy.css({
+			        top: '50%',    // Keep it in the middle of the screen vertically
+			        left: '20%',   // Keep it at 20% from the left
+			        width: '2.9%', // Adjust width relative to the new canvas size
+			        paddingBottom: '2%',  // Maintain consistent aspect ratio
+			        backgroundImage: 'url(https://flappybird.io/img/bird.png)', // Set background image
+			        backgroundSize: '300%',  // Keep the bird's frames intact
+			        position: 'absolute',  // Keep bird absolutely positioned
+			        zIndex: '150'  // Ensure the bird is in front of other elements
+			    });
 			}
 			
 			// Trigger the resizeCanvas function on window resize
 			$(window).on('resize', function() {
-			    resizeCanvas();
+			    resizeCanvas();  // Adjust canvas size and bird position on window resize
 			});
 			
 			// Initial call to set the canvas size and bird position
 			resizeCanvas();
+
 
                 var CurrentScore = 0;
                 
