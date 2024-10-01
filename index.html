@@ -235,8 +235,6 @@
                 
                 var gameLoopIntervalID = 0;
                 var Paused = true;
-				
-                var gameStarted = false;  // Flag to track if the game has started
 
                 var Lost = false;
                 $('#PauseButton').on('touchstart', function(event) {
@@ -400,20 +398,9 @@ resizeBird(); // Call initially to set the bird's size
                         selectorObject.stop().rotate(0).css('top','50%');
                     }
                     // Start the game on first click or touch
-					
-					$('#Canvas').on('mousedown touchstart', function() {
-					    if (!gameStarted) {
-					        gameStarted = true;  // Start the game
-					        startGame();  // Call the function to start the game loop
-					    }
-					    
-					    Birdy.jump(); // The bird will jump on interaction
-					});
 
 					this.fall = function(){
-						if (!gameStarted) {
-							        return; // Don't let the bird fall before the game starts
-							    }
+						
 						if(!jumping){ //Check if we're jumping
 							//If we're currently not jumping
 							selectorObject.stop().animate({top:'+='+gravVeloc+'%'}, 30, 'linear'); //Stop any current animations and then drop the bird by Velocity%
