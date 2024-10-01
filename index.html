@@ -14,29 +14,28 @@
 				height:100%; /* Define we're using full height of the browser */
                 overflow: hidden; /* Hide scrollbars */
 			}
-			#Canvas {
-				    width: 100vw; /* Full viewport width */
-				    height: 100vh; /* Full viewport height */
-				    background-color: steelblue; /* Temporary background color */
-				    position: relative; /* Ensure relative positioning for bird placement */
-				}
-
+			#Canvas{
+                position:relative; /* Position relative, so all absolute items will be "contained"" through here */
+				width: 100%; /* Define that we're using the full width of the body */
+				height: 100%; /* Define that we're using the full width of the body */
+				background: steelblue; /* Temporary color background */
 			}
-			#Birdy {
-				    width: 50px; /* Set a fixed width for the bird to ensure visibility */
-				    height: auto; /* Keep the aspect ratio */
-				    background-image: url('https://flappybird.io/img/bird.png');
-				    background-size: contain; /* Ensure the image fits within the div */
-				    background-repeat: no-repeat; /* Avoid repeating the bird image */
-				    
-				    position: absolute; /* Ensure the bird is absolutely positioned */
-				    top: 50%; /* Place the bird in the middle vertically */
-				    left: 20%; /* Keep the bird 20% from the left */
-				    
-				    z-index: 150; /* Ensure the bird is in front of pipes */
-				    transform: translateY(-50%); /* Center the bird vertically */
-				}
-
+			#Birdy{
+                /* Ratio is about 1.449 (Width/Height) */
+		width: 2.9%;
+                padding-bottom: 2%;
+                
+                
+                background-image: url('https://flappybird.io/img/bird.png');
+                
+                background-size: 300%; /* Make the width 300% of the current width, so that only 1 frame fits and the other 2 frames are hidden */
+				
+				position:absolute; /* Absolutely positioned, so it's out of flow of regular elements, position wherever we'd like */
+				top: 50%; /* We're going to be around middle of the screen (a bit lower due to height)*/
+				left: 20%; /* We're going to be at around 20% left of the screen */
+                
+                z-index: 150; /* Display in front of pipes even after getting hit by them */
+			}
             
             .FallenBirdy{
                 -webkit-transform:rotate(90deg);
@@ -235,14 +234,13 @@
                 
                 var gameLoopIntervalID = 0;
                 var Paused = true;
-
+                
                 var Lost = false;
                 $('#PauseButton').on('touchstart', function(event) {
 		    event.preventDefault(); // Prevent default behavior
 		    togglePause(); // Toggle the pause on touch
 		});
 
-		
                 function pauseGame(){
                     clearInterval(gameLoopIntervalID); //Stop the timer
                     $('.Pipe').addClass('paused'); //Pause the CSS3 animation so the pipes don't move.
@@ -302,18 +300,6 @@
 		    resizeCanvas(); // Call resize function on window resize
 		});
 		resizeCanvas(); // Initial call to set the canvas size
-
-		function resizeBird() {
-		    var bird = document.getElementById('Birdy');
-		    
-		    // Set dynamic width for the bird (this can be adjusted)
-		    bird.style.width = (window.innerWidth * 0.05) + 'px';  // 5% of screen width
-		    bird.style.height = 'auto';  // Keep aspect ratio
-		}
-
-// Call this on window resize
-window.addEventListener('resize', resizeBird);
-resizeBird(); // Call initially to set the bird's size
 
                 var CurrentScore = 0;
                 
@@ -397,10 +383,8 @@ resizeBird(); // Call initially to set the bird's size
                         WingPosition = 0;
                         selectorObject.stop().rotate(0).css('top','50%');
                     }
-                    // Start the game on first click or touch
-
+                    
 					this.fall = function(){
-						
 						if(!jumping){ //Check if we're jumping
 							//If we're currently not jumping
 							selectorObject.stop().animate({top:'+='+gravVeloc+'%'}, 30, 'linear'); //Stop any current animations and then drop the bird by Velocity%
