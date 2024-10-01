@@ -294,14 +294,31 @@
                 }                            
 
 		function resizeCanvas() {
-		    var canvas = $('#Canvas');
-		    canvas.width(window.innerWidth); // Set width to window width
-		    canvas.height(window.innerHeight); // Set height to window height
-		}
-		$(window).on('resize', function() {
-		    resizeCanvas(); // Call resize function on window resize
-		});
-		resizeCanvas(); // Initial call to set the canvas size
+			    var canvas = $('#Canvas');
+			    canvas.width(window.innerWidth); // Set width to window width
+			    canvas.height(window.innerHeight); // Set height to window height
+			
+			    // Instead of recreating the bird, ensure the existing bird's size and position is adjusted:
+			    var birdy = $('#Birdy');
+			    
+			    // If the bird already exists, adjust its size/position if necessary
+			    if (birdy.length > 0) {
+			        // Adjust bird's position based on new canvas size
+			        birdy.css({
+			            top: '50%',  // Keep it in the middle of the screen vertically
+			            left: '20%', // Keep it at 20% from the left
+			            width: '2.9%',  // Adjust width relative to the new canvas size if necessary
+			        });
+			    }
+			}
+			
+			// Trigger the resizeCanvas function on window resize
+			$(window).on('resize', function() {
+			    resizeCanvas();
+			});
+			
+			// Initial call to set the canvas size and bird position
+			resizeCanvas();
 
                 var CurrentScore = 0;
                 
