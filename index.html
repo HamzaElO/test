@@ -360,7 +360,10 @@
                 
 				var Birdy = new (function(){
 					var selectorObject = $('#Birdy');
-					
+					    if (selectorObject.length === 0) {
+						        // If Birdy doesn't exist, create one
+						        selectorObject = $('<div id="Birdy"></div>').appendTo('#Canvas');
+						    }
 					var jumping = false;
 					
 					var gravVeloc = 0;
