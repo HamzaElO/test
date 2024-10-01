@@ -191,9 +191,7 @@
             
             <div id="InstructionBox" style="position: absolute; left: 50%; display:none;">
                 <div style="position: relative; left: -50%; z-index: 150; font-family:flappybird; color:white; font-size: 2vw;" class="noSelect">
-                    Click to Fly <br>
-                    Space Bar to Reset <br>
-                    "P" to Pause
+                    Tap to Fly
                 </div>
             </div>
                         
@@ -334,10 +332,11 @@
                     event.stopPropagation(); //Don't allow the click to register as a "jump" command, by stopping it's propagation through the DOM tree.
                     togglePause(); //Toggle the pause.
                 });
-                
-                $('#ResetButton').click(function(){
-                    resetGame();
-                });
+		                
+		$('#ResetButton').on('click touchstart', function(event) {
+		    event.preventDefault();  // Prevent the default touch behavior (which may cause issues)
+		    resetGame();  // Call your reset function
+		});
                 
 				canvasObject.mousedown(function(){
 					Birdy.jump(); //Jump when the user clicks
